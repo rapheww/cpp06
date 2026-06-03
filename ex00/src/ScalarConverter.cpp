@@ -6,7 +6,7 @@
 /*   By: rchaumei <rchaumei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 13:00:17 by rchaumei          #+#    #+#             */
-/*   Updated: 2026/06/02 19:05:41 by rchaumei         ###   ########.fr       */
+/*   Updated: 2026/06/03 14:30:44 by rchaumei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int const intMin = std::numeric_limits<int>::min();
 int const intMax = std::numeric_limits<int>::max();
 float const floatMin = std::numeric_limits<float>::min();
 float const floatMax = std::numeric_limits<float>::max();
-std::string flag;
+double const doubleMin = std::numeric_limits<double>::min();
+double const doubleMax = std::numeric_limits<double>::max();
 
 ScalarConverter::ScalarConverter(){
     // std::cout<<"ScalarConverter Default constructor called\n"
@@ -70,11 +71,14 @@ void convertFloat(const std::string& literal){
 
    if (displayChar(asInt))
         std::cout<<"char : '"<<asChar<<"'"<<std::endl;
-    std::cout<<"int : "<<asInt<<std::endl;
+    if (asFloat > intMax || asFloat < intMin)
+        std::cout<<"int : impossible"<<std::endl;
+    else
+        std::cout<<"int : "<<asInt<<std::endl;
     if (asFloat == asInt)
         std::cout<<"float : "<<std::fixed<<std::setprecision(1)<<asFloat<<"f"<<std::endl;
     else
-        std::cout<<"float : "<<asFloat<<"f"<<std::endl;
+            std::cout<<"float : "<<asFloat<<"f"<<std::endl;
     std::cout<<"double : "<<asDouble<<std::endl;
 }
 
@@ -87,7 +91,10 @@ void convertDouble(const std::string& literal){
 
    if (displayChar(asInt))
         std::cout<<"char : '"<<asChar<<"'"<<std::endl;
-    std::cout<<"int : "<<asInt<<std::endl;
+    if (asDouble > intMax || asDouble < intMin)
+        std::cout<<"int : impossible"<<std::endl;
+    else
+        std::cout<<"int : "<<asInt<<std::endl;
     if (asFloat == asInt)
         std::cout<<"float : "<<std::fixed<<std::setprecision(1)<<asFloat<<"f"<<std::endl;
     else
@@ -98,17 +105,14 @@ void convertDouble(const std::string& literal){
 void ScalarConverter::convert(const std::string& literal){
     if (pseudoLiteralcase(literal))
         return ;
-    else if(isChar(literal)){
+    else if(isChar(literal))
         convertChar(literal);
-    }
-    else if (isInt(literal)){
+    else if (isInt(literal))
         convertInt(literal);
-    }
     else if (isFloat(literal))
         convertFloat(literal);
-    else if (isDouble(literal)){
+    else if (isDouble(literal))
         convertDouble(literal);
-    }
     else
         std::cout<<"Input isn't a literal type : int / char / float / double\n";
 }

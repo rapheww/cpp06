@@ -6,7 +6,7 @@
 /*   By: rchaumei <rchaumei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 13:41:06 by rchaumei          #+#    #+#             */
-/*   Updated: 2026/06/02 19:03:02 by rchaumei         ###   ########.fr       */
+/*   Updated: 2026/06/03 14:18:57 by rchaumei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int const intMin = std::numeric_limits<int>::min();
 int const intMax = std::numeric_limits<int>::max();
 float const floatMin = std::numeric_limits<float>::min();
 float const floatMax = std::numeric_limits<float>::max();
+double const doubleMin = std::numeric_limits<double>::min();
+double const doubleMax = std::numeric_limits<double>::max();
 
 int pseudoLiteralcase(const std::string& literal){
     std::string pseudoLiteral[6] = {"nan", "nanf", "+inf", "+inff", "-inf", "-inff"};
@@ -51,7 +53,9 @@ int displayChar(int asInt){
 }
 
 int isInt(std::string str){
-    if (!(str.find_first_not_of("0123456789") == std::string::npos))
+    if (str.rfind('-') != 0 && str.rfind('-') != std::string::npos)
+        return 0;
+    if (!(str.find_first_not_of("-0123456789") == std::string::npos))
         return 0;
     if (str.size() > 11)
         return 0;
@@ -68,38 +72,21 @@ int isChar(std::string str){
 }
 
 int isFloat(std::string str){
-    int countDot = 0;
-    int countF = 0;
+    char *endptr;
     
-    for (size_t i = 0; i < str.size(); i++){
-        if (str[i] == '.')
-            countDot++;
-    }
-    if (countDot != 1)
-        return 0;
     if (str[str.size() - 1] != 'f')
         return 0;
-    for (size_t i = 0; i < str.size(); i++){
-        if (str[i] == 'f')
-            countF++;
-    }
-    if (countF != 1)
-        return 0;
-    if (str.find_first_not_of("0123456789.f") != std::string::npos)
+    std::strtof(str.c_str(), &endptr);
+    if (endptr == str.c_str() || *endptr != 'f' || *(endptr + 1) != '\0')
         return 0;
     return 1;
 }
 
 int isDouble(std::string str){
-    int countDot = 0;
+   char *endptr;
     
-    for (size_t i = 0; i < str.size(); i++){
-        if (str[i] == '.')
-            countDot++;
-    }
-    if (countDot != 1)
-        return 0;
-    if (str.find_first_not_of("0123456789.") != std::string::npos)
+    std::strtod(str.c_str(), &endptr);
+    if (endptr == str.c_str() || *endptr != '\0')
         return 0;
     return 1;
 }
