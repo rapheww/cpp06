@@ -6,18 +6,11 @@
 /*   By: rchaumei <rchaumei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 13:41:06 by rchaumei          #+#    #+#             */
-/*   Updated: 2026/06/03 14:18:57 by rchaumei         ###   ########.fr       */
+/*   Updated: 2026/06/03 16:38:14 by rchaumei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-
-int const intMin = std::numeric_limits<int>::min();
-int const intMax = std::numeric_limits<int>::max();
-float const floatMin = std::numeric_limits<float>::min();
-float const floatMax = std::numeric_limits<float>::max();
-double const doubleMin = std::numeric_limits<double>::min();
-double const doubleMax = std::numeric_limits<double>::max();
 
 int pseudoLiteralcase(const std::string& literal){
     std::string pseudoLiteral[6] = {"nan", "nanf", "+inf", "+inff", "-inf", "-inff"};
