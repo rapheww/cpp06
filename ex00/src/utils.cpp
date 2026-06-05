@@ -6,7 +6,7 @@
 /*   By: rchaumei <rchaumei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 13:41:06 by rchaumei          #+#    #+#             */
-/*   Updated: 2026/06/03 16:38:14 by rchaumei         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:30:10 by rchaumei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int pseudoLiteralcase(const std::string& literal){
 }
 
 int displayChar(int asInt){
-    if (asInt > 255){
+    if (asInt > 255 || asInt < 0){
         std::cout<<"char : impossible"<<std::endl; return 0;
     }
     if (asInt < 32 || asInt > 127){
-        std::cout<<"char : not displayable"<<std::endl; return 0;
+        std::cout<<"char : non displayable"<<std::endl; return 0;
     }
     return 1;
 }
@@ -69,6 +69,10 @@ int isFloat(std::string str){
     
     if (str[str.size() - 1] != 'f')
         return 0;
+    if (str.find('.') == std::string::npos)
+        return 0;
+    if (!isdigit(str[str.find('.') + 1]))
+        return 0;
     std::strtof(str.c_str(), &endptr);
     if (endptr == str.c_str() || *endptr != 'f' || *(endptr + 1) != '\0')
         return 0;
@@ -76,8 +80,10 @@ int isFloat(std::string str){
 }
 
 int isDouble(std::string str){
-   char *endptr;
+    char *endptr;
     
+    if (str.find('.') != std::string::npos && !isdigit(str[str.find('.') + 1]))
+        return 0;
     std::strtod(str.c_str(), &endptr);
     if (endptr == str.c_str() || *endptr != '\0')
         return 0;
